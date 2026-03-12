@@ -1,0 +1,266 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #0369a1 0%, #0ea5e9 50%, #06b6d4 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .app-wrapper {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    
+    .shark-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .shark-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 40;
+    }
+    
+    .modal-backdrop.active {
+      display: block;
+    }
+    
+    .modal-content {
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body>
+  <div class="app-wrapper"><!-- Header -->
+   <div class="text-center mb-8">
+    <h1 class="text-5xl font-bold text-white mb-2">🦈 Shark Adventure 🦈</h1>
+    <p class="text-xl text-white/90">Learn about the amazing sharks of the ocean!</p>
+   </div><!-- Language Selector -->
+   <div class="flex justify-center gap-2 mb-8"><button class="language-btn bg-white text-cyan-600 font-bold px-4 py-2 rounded-full active" onclick="setLanguage('en')" data-lang="en">English</button> <button class="language-btn bg-white text-cyan-600 font-bold px-4 py-2 rounded-full" onclick="setLanguage('th')" data-lang="th">ไทย</button> <button class="language-btn bg-white text-cyan-600 font-bold px-4 py-2 rounded-full" onclick="setLanguage('zh')" data-lang="zh">中文</button> <button class="language-btn bg-white text-cyan-600 font-bold px-4 py-2 rounded-full" onclick="setLanguage('ja')" data-lang="ja">日本語</button>
+   </div><!-- Shark Cards Grid -->
+   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto"><!-- Great White Shark -->
+    <div class="shark-card bg-white/90 rounded-3xl p-6 border-4 border-cyan-300 cursor-pointer shadow-lg" onclick="showSharkInfo('great-white')" data-shark-id="great-white">
+     <div class="text-6xl mb-3">
+      🦈
+     </div>
+     <h2 class="text-2xl font-bold text-gray-800 mb-2" data-en="Great White Shark" data-th="ฉลามหัวขาด" data-zh="大白鲨" data-ja="ホホジロザメ">Great White Shark</h2>
+     <p class="text-gray-600" data-en="The king of the ocean" data-th="ราชาของมหาสมุทร" data-zh="海洋之王" data-ja="海の王様">The king of the ocean</p>
+    </div><!-- Whale Shark -->
+    <div class="shark-card bg-white/90 rounded-3xl p-6 border-4 border-blue-300 cursor-pointer shadow-lg" onclick="showSharkInfo('whale-shark')" data-shark-id="whale-shark">
+     <div class="text-6xl mb-3">
+      🐋
+     </div>
+     <h2 class="text-2xl font-bold text-gray-800 mb-2" data-en="Whale Shark" data-th="ฉลามวาฬ" data-zh="鲸鲨" data-ja="ジンベエザメ">Whale Shark</h2>
+     <p class="text-gray-600" data-en="The gentle giant" data-th="ยักษ์อ่อนโยน" data-zh="温柔的巨人" data-ja="やさしい巨人">The gentle giant</p>
+    </div><!-- Hammerhead Shark -->
+    <div class="shark-card bg-white/90 rounded-3xl p-6 border-4 border-yellow-300 cursor-pointer shadow-lg" onclick="showSharkInfo('hammerhead')" data-shark-id="hammerhead">
+     <div class="text-6xl mb-3">
+      🔨
+     </div>
+     <h2 class="text-2xl font-bold text-gray-800 mb-2" data-en="Hammerhead Shark" data-th="ฉลามค้อน" data-zh="锤头鲨" data-ja="シュモクザメ">Hammerhead Shark</h2>
+     <p class="text-gray-600" data-en="The unique swimmer" data-th="นักว่ายน้ำเอกลักษณ์" data-zh="独特的游泳者" data-ja="ユニークな泳ぎ手">The unique swimmer</p>
+    </div><!-- Tiger Shark -->
+    <div class="shark-card bg-white/90 rounded-3xl p-6 border-4 border-orange-300 cursor-pointer shadow-lg" onclick="showSharkInfo('tiger-shark')" data-shark-id="tiger-shark">
+     <div class="text-6xl mb-3">
+      🐯
+     </div>
+     <h2 class="text-2xl font-bold text-gray-800 mb-2" data-en="Tiger Shark" data-th="ฉลามเสือ" data-zh="虎鲨" data-ja="トラザメ">Tiger Shark</h2>
+     <p class="text-gray-600" data-en="The stripy explorer" data-th="นักสำรวจที่มีลายทาง" data-zh="有条纹的探险家" data-ja="しま模様の冒険家">The stripy explorer</p>
+    </div>
+   </div>
+  </div><!-- Modal Backdrop -->
+  <div class="modal-backdrop" id="modalBackdrop" onclick="closeSharkInfo()"></div><!-- Modal -->
+  <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl p-8 shadow-2xl z-50 hidden max-w-2xl w-11/12" id="sharkModal"><button class="absolute top-4 right-4 text-2xl text-gray-500 hover:text-gray-700" onclick="closeSharkInfo()">✕</button>
+   <div class="modal-content">
+    <div class="text-5xl mb-4 text-center" id="sharkEmoji"></div>
+    <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center" id="sharkTitle"></h2><button class="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-4 rounded-xl mb-6 transition" onclick="playSharkAudio(currentShark)"> 🔊 Play Audio </button>
+    <p class="text-gray-700 text-lg leading-relaxed mb-4" id="sharkInfo"></p><button class="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-xl transition" onclick="closeSharkInfo()"> Close </button>
+   </div>
+  </div>
+  <script>
+    /* ===========================
+       AUDIO SYSTEM
+       =========================== */
+    
+    let currentLanguage = "en";
+    let currentAudio = null;
+    let currentShark = null;
+
+    const audioUrls = {
+      "en": {
+        "great-white": "/audio/great-white-en.mp3",
+        "whale-shark": "/audio/whale-shark-en.mp3",
+        "hammerhead": "/audio/hammerhead-en.mp3",
+        "tiger-shark": "/audio/tiger-shark-en.mp3"
+      },
+      "th": {
+        "great-white": "/audio/great-white-th.mp3",
+        "whale-shark": "/audio/whale-shark-th.mp3",
+        "hammerhead": "/audio/hammerhead-th.mp3",
+        "tiger-shark": "/audio/tiger-shark-th.mp3"
+      },
+      "zh": {
+        "great-white": "/audio/great-white-zh.mp3",
+        "whale-shark": "/audio/whale-shark-zh.mp3",
+        "hammerhead": "/audio/hammerhead-zh.mp3",
+        "tiger-shark": "/audio/tiger-shark-zh.mp3"
+      },
+      "ja": {
+        "great-white": "/audio/great-white-ja.mp3",
+        "whale-shark": "/audio/whale-shark-ja.mp3",
+        "hammerhead": "/audio/hammerhead-ja.mp3",
+        "tiger-shark": "/audio/tiger-shark-ja.mp3"
+      }
+    };
+
+    function playSharkAudio(sharkId) {
+      const langAudio = audioUrls[currentLanguage];
+      const audioPath = langAudio && langAudio[sharkId];
+
+      if (!audioPath) {
+        console.error("Audio not found for:", sharkId, "language:", currentLanguage);
+        return;
+      }
+
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+
+      currentAudio = new Audio(audioPath);
+      currentAudio.play().catch(err => console.error("Play failed:", err));
+    }
+
+    function stopCurrentAudio() {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
+    }
+
+    /* ===========================
+       SHARK DATA
+       =========================== */
+
+    const sharkData = {
+      "great-white": {
+        emoji: "🦈",
+        en: { title: "Great White Shark", info: "I'm the king of the ocean! I can swim super fast, like a racing car. I have about 300 sharp teeth. I can grow as long as a big car. I love to eat fish and seals. Did you know I can jump out of the water? That's how powerful I am!" },
+        th: { title: "ฉลามหัวขาด", info: "ฉันเป็นราชาของมหาสมุทร ฉันสามารถว่ายน้ำได้เร็วมาก เหมือนรถแข่ง มีฟันคม ประมาณ 300 ซี่ ฉันสามารถโตได้เท่ากับรถยนต์ขนาดใหญ่ ฉันชอบกินปลาและม้าน้ำ คุณรู้ไหมว่าฉันสามารถโดดออกจากน้ำได้? นั่นแสดงว่าฉันมีพลังแค่ไหน" },
+        zh: { title: "大白鲨", info: "我是海洋之王! 我能游得超级快,就像赛车一样。我有大约300颗尖锐的牙齿。我能长得像一辆大汽车那么长。我喜欢吃鱼和海豹。你知道我能跳出水面吗? 这就是我有多么强大的证明!" },
+        ja: { title: "ホホジロザメ", info: "私は海の王様です! 私はレーシングカーのように超高速で泳げます。私は約300本の鋭い歯を持っています。私は大きな車くらいの長さまで成長できます。私は魚とアザラシを食べるのが大好きです。私が水から飛び出すことができることを知っていますか? それが私がどれほど強大かを示しています!" }
+      },
+      "whale-shark": {
+        emoji: "🐋",
+        en: { title: "Whale Shark", info: "I'm the gentle giant of the ocean! I'm the biggest fish in the whole ocean. But don't worry, I only eat tiny little things called plankton. I'm very gentle and friendly to divers. I have pretty white spots all over my body. Many people love to swim with me because I'm so peaceful!" },
+        th: { title: "ฉลามวาฬ", info: "ฉันคือยักษ์อ่อนโยนของมหาสมุทร ฉันเป็นปลาที่ใหญ่ที่สุดในมหาสมุทร แต่ไม่ต้องกังวล ฉันกินแค่สิ่งเล็กน้อยที่เรียกว่าแพลงก์ตัน ฉันนุ่มนวลและเป็นมิตรกับนักดำน้ำ ฉันมีจุดสีขาวสวยงาม คนจำนวนมากชอบว่ายน้ำกับฉันเพราะฉันสงบสุข" },
+        zh: { title: "鲸鲨", info: "我是海洋中温柔的巨人! 我是整个海洋中最大的鱼。但别担心,我只吃叫浮游生物的小东西。我很温柔,对潜水员很友好。我全身有漂亮的白色斑点。很多人喜欢和我一起游泳,因为我非常温和。" },
+        ja: { title: "ジンベエザメ", info: "私は海のやさしい巨人です! 私は海全体で最も大きな魚です。でも心配しないでください、私はプランクトンと呼ばれる小さなものだけを食べます。私は優しく、ダイバーに親切です。私は全身に美しい白い斑点があります。多くの人が私と一緒に泳ぐのが好きです。私はとても平和だからです。" }
+      },
+      "hammerhead": {
+        emoji: "🔨",
+        en: { title: "Hammerhead Shark", info: "I have a funny-looking head, but it helps me in amazing ways! I can see all around with my wide head. I like to swim in big groups with my friends. I love to eat stingrays for dinner. I'm super good at turning quickly in the water!" },
+        th: { title: "ฉลามค้อน", info: "มีหัวที่ตลกขบขัน แต่มันช่วยฉันได้มากมาย ฉันสามารถมองเห็นทั้งหมดด้วยหัวที่กว้าง ฉันชอบว่ายน้ำในกลุ่มใหญ่กับเพื่อน ฉันชอบกินแมงดาสำหรับอาหารค่ำ ฉันถนัดการเลี้ยวอย่างรวดเร็วในน้ำ" },
+        zh: { title: "锤头鲨", info: "我的头长得很有趣,但它以惊人的方式帮助我! 我能用宽阔的头部360度看周围。我喜欢和朋友们一起成群游泳。我喜欢吃黄貂鱼当晚餐。我在水中转向的速度超级快!" },
+        ja: { title: "シュモクザメ", info: "私の頭は面白い形をしていますが、それは素晴らしい方法で私を助けます! 広い頭ですべてを見回すことができます。私は友達と大きなグループで泳ぐのが好きです。夕食にエイを食べるのが好きです。私は水中で非常に速くターンできます!" }
+      },
+      "tiger-shark": {
+        emoji: "🐯",
+        en: { title: "Tiger Shark", info: "I'm the stripy explorer! When I was young, I had stripes like a tiger, which is how I got my name. I will try to eat almost anything! I love to hunt at night time. I can grow really, really big. I explore all over the ocean looking for adventure!" },
+        th: { title: "ฉลามเสือ", info: "ฉันคือนักสำรวจที่มีลายทาง เมื่อฉันเด็ก ฉันมีลายเหมือนเสือ นั่นคือที่มาของชื่อของฉัน ฉันจะกินเกือบทุกอย่างที่เห็น ฉันชอบล่าสัตว์ในเวลากลางคืน ฉันสามารถโตได้ใหญ่มากๆ ฉันสำรวจทั่วมหาสมุทรค้นหาการผจญภัย" },
+        zh: { title: "虎鲨", info: "我是有条纹的探险家! 当我年轻时,我有像老虎一样的条纹,这就是我得名的原因。我几乎什么都吃! 我喜欢在晚上狩猎。我能长得非常非常大。我在整个海洋中探索寻找冒险!" },
+        ja: { title: "トラザメ", info: "私はしま模様の冒険家です! 私が若かった時、私はトラのような縞がありました。それが私が名付けられた理由です。私はほぼすべてを食べます! 私は夜間の狩りが好きです。私は本当に大きく成長できます。私は海全体を探索して冒険を探しています!" }
+      }
+    };
+
+    /* ===========================
+       MODAL FUNCTIONS
+       =========================== */
+
+    function showSharkInfo(sharkId) {
+      currentShark = sharkId;
+      const shark = sharkData[sharkId];
+      const sharkText = shark[currentLanguage];
+
+      document.getElementById('sharkEmoji').textContent = shark.emoji;
+      document.getElementById('sharkTitle').textContent = sharkText.title;
+      document.getElementById('sharkInfo').textContent = sharkText.info;
+
+      document.getElementById('sharkModal').classList.remove('hidden');
+      document.getElementById('modalBackdrop').classList.add('active');
+    }
+
+    function closeSharkInfo() {
+      stopCurrentAudio();
+      document.getElementById('sharkModal').classList.add('hidden');
+      document.getElementById('modalBackdrop').classList.remove('active');
+    }
+
+    /* ===========================
+       LANGUAGE SYSTEM
+       =========================== */
+
+    function setLanguage(lang) {
+      currentLanguage = lang;
+      stopCurrentAudio();
+
+      // Update language button active state
+      document.querySelectorAll('.language-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-lang') === lang) {
+          btn.classList.add('active');
+        }
+      });
+
+      // Update all elements with data-* attributes
+      document.querySelectorAll('[data-en][data-th][data-zh][data-ja]').forEach(element => {
+        const text = element.getAttribute(`data-${lang}`);
+        if (text) {
+          element.textContent = text;
+        }
+      });
+
+      // Update modal if open
+      if (currentShark && !document.getElementById('sharkModal').classList.contains('hidden')) {
+        const shark = sharkData[currentShark];
+        const sharkText = shark[currentLanguage];
+        document.getElementById('sharkTitle').textContent = sharkText.title;
+        document.getElementById('sharkInfo').textContent = sharkText.info;
+      }
+    }
+
+    // Initialize
+    window.addEventListener('load', () => {
+      setLanguage('en');
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9daf277e626ffda6',t:'MTc3MzI4MDI5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
