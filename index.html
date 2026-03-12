@@ -54,6 +54,68 @@
       max-height: 80vh;
       overflow-y: auto;
     }
+
+    .game-tab.active {
+      background-color: #06b6d4 !important;
+      color: white !important;
+    }
+
+    .memory-card, .diet-option {
+      background-color: #e0f2fe;
+      border: 3px solid #0ea5e9;
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .memory-card:hover, .diet-option:hover {
+      transform: scale(1.05);
+      background-color: #cffafe;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .memory-card.matched {
+      background-color: #86efac;
+      border-color: #16a34a;
+      cursor: default;
+    }
+
+    .size-shark {
+      font-size: 2.5rem;
+      cursor: move;
+      padding: 1rem;
+      transition: transform 0.2s ease;
+    }
+
+    .size-shark:hover {
+      transform: scale(1.2);
+    }
+
+    .sort-slot {
+      background-color: #dbeafe;
+      border: 2px dashed #0ea5e9;
+      border-radius: 0.75rem;
+      padding: 2rem 1rem;
+      text-align: center;
+      font-size: 2rem;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sort-slot.has-item {
+      border-style: solid;
+      background-color: #cffafe;
+    }
   </style>
   <style>body { box-sizing: border-box; }</style>
  </head>
@@ -97,18 +159,144 @@
      <h2 class="text-2xl font-bold text-gray-800 mb-2" data-en="Tiger Shark" data-th="ฉลามเสือ" data-zh="虎鲨" data-ja="トラザメ">Tiger Shark</h2>
      <p class="text-gray-600" data-en="The stripy explorer" data-th="นักสำรวจที่มีลายทาง" data-zh="有条纹的探险家" data-ja="しま模様の冒険家">The stripy explorer</p>
     </div>
+   </div><!-- Fun Shark Facts Section -->
+   <div class="mt-12 max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold text-white mb-4 text-center" data-en="🎓 Fun Shark Facts" data-th="🎓 ข้อเท็จจริงที่สนุก" data-zh="🎓 有趣的鲨鱼事实" data-ja="🎓 楽しい鮫の事実">🎓 Fun Shark Facts</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+     <div class="fact-card bg-white/90 rounded-2xl p-6 cursor-pointer transition hover:shadow-lg" onclick="toggleFact(this)">
+      <p class="font-bold text-lg text-gray-800 fact-question" data-en="🦴 Sharks have no bones!" data-th="🦴 ฉลามไม่มีกระดูก!" data-zh="🦴 鲨鱼没有骨头!" data-ja="🦴 サメには骨がありません!">🦴 Sharks have no bones!</p>
+      <p class="text-gray-700 fact-answer hidden" data-en="Their skeletons are made of cartilage, like the tip of your nose!" data-th="กระดูกสันหลังของพวกเขาทำจากกระดูกอ่อน เหมือนปลายจมูกของคุณ!" data-zh="他们的骨骼是由软骨制成的,就像你的鼻子尖端一样!" data-ja="彼らの骨格は軟骨でできており、あなたの鼻の先端のようです!">Their skeletons are made of cartilage, like the tip of your nose!</p>
+     </div>
+     <div class="fact-card bg-white/90 rounded-2xl p-6 cursor-pointer transition hover:shadow-lg" onclick="toggleFact(this)">
+      <p class="font-bold text-lg text-gray-800 fact-question" data-en="👃 Sharks smell with their nose!" data-th="👃 ฉลามดมกลิ่นด้วยจมูก!" data-zh="👃 鲨鱼用鼻子闻!" data-ja="👃 サメは鼻で匂いをかぎます!">👃 Sharks smell with their nose!</p>
+      <p class="text-gray-700 fact-answer hidden" data-en="They can smell a drop of blood from miles away in the ocean!" data-th="พวกเขาสามารถดมกลิ่นเลือดหยดหนึ่งได้จากหลายไมล์ห่างออกไปในมหาสมุทร!" data-zh="他们可以从海中数英里外闻到一滴血!" data-ja="彼らは海から数マイル離れた場所から血の一滴の臭いをかぐことができます!">They can smell a drop of blood from miles away in the ocean!</p>
+     </div>
+     <div class="fact-card bg-white/90 rounded-2xl p-6 cursor-pointer transition hover:shadow-lg" onclick="toggleFact(this)">
+      <p class="font-bold text-lg text-gray-800 fact-question" data-en="📏 Sharks never stop growing!" data-th="📏 ฉลามไม่เคยหยุดเติบโต!" data-zh="📏 鲨鱼永远不会停止成长!" data-ja="📏 サメは決して成長をやめません!">📏 Sharks never stop growing!</p>
+      <p class="text-gray-700 fact-answer hidden" data-en="Some sharks can live over 100 years old and keep getting bigger!" data-th="ฉลามบางตัวสามารถอยู่ได้มากกว่า 100 ปี และเติบโตใหญ่ขึ้นไปเรื่อย ๆ!" data-zh="有些鲨鱼可以活100多岁,并继续变大!" data-ja="一部のサメは100年以上生きることができ、成長し続けています!">Some sharks can live over 100 years old and keep getting bigger!</p>
+     </div>
+     <div class="fact-card bg-white/90 rounded-2xl p-6 cursor-pointer transition hover:shadow-lg" onclick="toggleFact(this)">
+      <p class="font-bold text-lg text-gray-800 fact-question" data-en="⚡ Sharks are faster than you!" data-th="⚡ ฉลามเร็วกว่าคุณ!" data-zh="⚡ 鲨鱼比你快!" data-ja="⚡ サメはあなたより速い!">⚡ Sharks are faster than you!</p>
+      <p class="text-gray-700 fact-answer hidden" data-en="They can swim up to 40 miles per hour, and some are even faster!" data-th="พวกเขาสามารถว่ายน้ำได้ถึง 40 ไมล์ต่อชั่วโมง และบางตัวยังเร็วกว่านั้นอีก!" data-zh="他们可以以每小时40英里的速度游泳,有些甚至更快!" data-ja="彼らは毎時40マイルまで泳ぐことができ、中には更に速いものもあります!">They can swim up to 40 miles per hour, and some are even faster!</p>
+     </div>
+    </div>
+   </div><!-- Shark Quiz Section -->
+   <div class="mt-12 max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold text-white mb-4 text-center" data-en="🧠 Shark Quiz" data-th="🧠 แบบทดสอบฉลาม" data-zh="🧠 鲨鱼测验" data-ja="🧠 サメクイズ">🧠 Shark Quiz</h2>
+    <div class="bg-white/90 rounded-2xl p-6">
+     <p class="text-lg font-bold text-gray-800 mb-4" id="quizQuestion" data-en="Which shark is the biggest?" data-th="ฉลามตัวไหนใหญ่ที่สุด?" data-zh="哪种鲨鱼最大?" data-ja="どのサメが最も大きいですか?">Which shark is the biggest?</p>
+     <div class="grid grid-cols-2 gap-3 mb-4" id="quizOptions">
+      <button class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-xl" onclick="checkAnswer('whale-shark')" data-en="Whale Shark" data-th="ฉลามวาฬ" data-zh="鲸鲨" data-ja="ジンベエザメ">Whale Shark</button> <button class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-xl" onclick="checkAnswer('great-white')" data-en="Great White" data-th="ฉลามหัวขาด" data-zh="大白鲨" data-ja="ホホジロザメ">Great White</button> <button class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-xl" onclick="checkAnswer('hammerhead')" data-en="Hammerhead" data-th="ฉลามค้อน" data-zh="锤头鲨" data-ja="シュモクザメ">Hammerhead</button> <button class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-xl" onclick="checkAnswer('tiger-shark')" data-en="Tiger Shark" data-th="ฉลามเสือ" data-zh="虎鲨" data-ja="トラザメ">Tiger Shark</button>
+     </div>
+     <p class="text-center text-lg font-bold text-gray-800" id="quizResult"></p>
+    </div>
+   </div><!-- Shark Diet Game Section -->
+   <div class="mt-12 max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold text-white mb-4 text-center" data-en="🍽️ Shark Diet" data-th="🍽️ อาหารฉลาม" data-zh="🍽️ 鲨鱼饮食" data-ja="🍽️ サメの食事">🍽️ Shark Diet</h2>
+    <div class="bg-white/90 rounded-2xl p-6">
+     <p class="text-lg font-bold text-gray-800 mb-4 text-center" data-en="Match the shark to what it eats!" data-th="จับคู่ฉลามกับสิ่งที่มันกิน!" data-zh="将鲨鱼与它吃的东西相匹配!" data-ja="サメをそれが食べるものと一致させてください!">Match the shark to what it eats!</p>
+     <div class="mb-4">
+      <p class="text-gray-700 font-bold mb-2" id="dietQuestion"></p>
+      <div class="grid grid-cols-2 gap-3" id="dietOptions"></div>
+     </div>
+     <p class="text-center text-lg font-bold text-gray-800" id="dietResult"></p>
+    </div>
+   </div><!-- Size Sorter Game Section -->
+   <div class="mt-12 max-w-4xl mx-auto mb-12">
+    <h2 class="text-3xl font-bold text-white mb-4 text-center" data-en="📏 Size Sorter" data-th="📏 เรียงลำดับขนาด" data-zh="📏 尺寸分类器" data-ja="📏 サイズソーター">📏 Size Sorter</h2>
+    <div class="bg-white/90 rounded-2xl p-6">
+     <p class="text-lg font-bold text-gray-800 mb-4 text-center" data-en="Arrange sharks from smallest to biggest!" data-th="จัดเรียงฉลามจากเล็กที่สุดไปใหญ่ที่สุด!" data-zh="将鲨鱼从最小到最大排列!" data-ja="サメを最小から最大に並べてください!">Arrange sharks from smallest to biggest!</p>
+     <div class="flex justify-between items-center gap-2 mb-6 bg-blue-100 rounded-xl p-4 min-h-20">
+      <div class="size-shark" draggable="true" ondragstart="dragStart(event)" ondragover="allowDrop(event)" ondrop="drop(event)" data-shark="whale-shark" data-size="1">
+       🐋
+      </div>
+      <div class="size-shark" draggable="true" ondragstart="dragStart(event)" ondragover="allowDrop(event)" ondrop="drop(event)" data-shark="great-white" data-size="2">
+       🦈
+      </div>
+      <div class="size-shark" draggable="true" ondragstart="dragStart(event)" ondragover="allowDrop(event)" ondrop="drop(event)" data-shark="tiger-shark" data-size="3">
+       🐯
+      </div>
+      <div class="size-shark" draggable="true" ondragstart="dragStart(event)" ondragover="allowDrop(event)" ondrop="drop(event)" data-shark="hammerhead" data-size="4">
+       🔨
+      </div>
+     </div>
+     <div class="space-y-2 mb-4">
+      <div class="sort-slot" ondragover="allowDrop(event)" ondrop="drop(event)" data-position="1"></div>
+      <div class="sort-slot" ondragover="allowDrop(event)" ondrop="drop(event)" data-position="2"></div>
+      <div class="sort-slot" ondragover="allowDrop(event)" ondrop="drop(event)" data-position="3"></div>
+      <div class="sort-slot" ondragover="allowDrop(event)" ondrop="drop(event)" data-position="4"></div>
+     </div><button class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-xl text-lg transition" onclick="checkSize()" data-en="Check Answer" data-th="ตรวจสอบคำตอบ" data-zh="检查答案" data-ja="答えを確認">Check Answer</button>
+     <p class="text-center text-lg font-bold text-gray-800 mt-4" id="sizeResult"></p>
+    </div>
+   </div><!-- Modal Backdrop -->
+   <div class="modal-backdrop" id="modalBackdrop" onclick="closeSharkInfo()"></div><!-- Modal -->
+   <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl p-8 shadow-2xl z-50 hidden max-w-2xl w-11/12" id="sharkModal">
+    <button class="absolute top-4 right-4 text-2xl text-gray-500 hover:text-gray-700" onclick="closeSharkInfo()">✕</button>
+    <div class="modal-content">
+     <div class="text-5xl mb-4 text-center" id="sharkEmoji"></div>
+     <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center" id="sharkTitle"></h2>
+     <p class="text-gray-700 text-lg leading-relaxed mb-4" id="sharkInfo"></p><button class="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-xl transition" onclick="closeSharkInfo()"> Close </button>
+    </div>
    </div>
-  </div><!-- Modal Backdrop -->
-  <div class="modal-backdrop" id="modalBackdrop" onclick="closeSharkInfo()"></div><!-- Modal -->
-  <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl p-8 shadow-2xl z-50 hidden max-w-2xl w-11/12" id="sharkModal">
-   <button class="absolute top-4 right-4 text-2xl text-gray-500 hover:text-gray-700" onclick="closeSharkInfo()">✕</button>
-   <div class="modal-content">
-    <div class="text-5xl mb-4 text-center" id="sharkEmoji"></div>
-    <h2 class="text-3xl font-bold text-gray-800 mb-4 text-center" id="sharkTitle"></h2>
-    <p class="text-gray-700 text-lg leading-relaxed mb-4" id="sharkInfo"></p><button class="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-xl transition" onclick="closeSharkInfo()"> Close </button>
-   </div>
-  </div>
-  <script>
+   <script>
+    /* ===========================
+       FACTS REVEAL SYSTEM
+       =========================== */
+
+    function toggleFact(element) {
+      const question = element.querySelector('.fact-question');
+      const answer = element.querySelector('.fact-answer');
+      const emojiMap = { '🦴': '✅', '👃': '✅', '📏': '✅', '⚡': '✅' };
+      const reverseEmojiMap = { '✅🦴': '🦴', '✅👃': '👃', '✅📏': '📏', '✅⚡': '⚡' };
+      const factIdMap = { '🦴': 'fact-bones', '👃': 'fact-smell', '📏': 'fact-growing', '⚡': 'fact-speed' };
+      
+      answer.classList.toggle('hidden');
+      
+      // Get the emoji to identify which fact was clicked
+      let emoji = null;
+      for (let [key] of Object.entries(emojiMap)) {
+        if (question.textContent.includes(key)) {
+          emoji = key;
+          break;
+        }
+      }
+
+      // Play audio when revealing the answer
+      if (!answer.classList.contains('hidden') && emoji) {
+        const factId = factIdMap[emoji];
+        playFactAudio(factId);
+      }
+      
+      // Replace emoji with checkmark or back to original emoji
+      if (answer.classList.contains('hidden')) {
+        Object.entries(reverseEmojiMap).forEach(([combined, original]) => {
+          question.textContent = question.textContent.replace(combined, original);
+        });
+      } else {
+        Object.entries(emojiMap).forEach(([original, checkmark]) => {
+          question.textContent = question.textContent.replace(original, checkmark);
+        });
+      }
+    }
+
+    function playFactAudio(factId) {
+      const langAudio = audioUrls[currentLanguage];
+      const audioPath = langAudio && langAudio[factId];
+
+      if (!audioPath) {
+        console.error("Audio not found for:", factId, "language:", currentLanguage);
+        return;
+      }
+
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+
+      currentAudio = new Audio(audioPath);
+      currentAudio.play().catch(err => console.error("Play failed:", err));
+    }
+
     /* ===========================
        AUDIO SYSTEM
        =========================== */
@@ -122,25 +310,41 @@
         "great-white": "/audio/great-white-en.mp3",
         "whale-shark": "/audio/whale-shark-en.mp3",
         "hammerhead": "/audio/hammerhead-en.mp3",
-        "tiger-shark": "/audio/tiger-shark-en.mp3"
+        "tiger-shark": "/audio/tiger-shark-en.mp3",
+        "fact-bones": "/audio/fact-bones-en.mp3",
+        "fact-smell": "/audio/fact-smell-en.mp3",
+        "fact-growing": "/audio/fact-growing-en.mp3",
+        "fact-speed": "/audio/fact-speed-en.mp3"
       },
       "th": {
         "great-white": "/audio/great-white-th.mp3",
         "whale-shark": "/audio/whale-shark-th.mp3",
         "hammerhead": "/audio/hammerhead-th.mp3",
-        "tiger-shark": "/audio/tiger-shark-th.mp3"
+        "tiger-shark": "/audio/tiger-shark-th.mp3",
+        "fact-bones": "/audio/fact-bones-th.mp3",
+        "fact-smell": "/audio/fact-smell-th.mp3",
+        "fact-growing": "/audio/fact-growing-th.mp3",
+        "fact-speed": "/audio/fact-speed-th.mp3"
       },
       "zh": {
         "great-white": "/audio/great-white-zh.mp3",
         "whale-shark": "/audio/whale-shark-zh.mp3",
         "hammerhead": "/audio/hammerhead-zh.mp3",
-        "tiger-shark": "/audio/tiger-shark-zh.mp3"
+        "tiger-shark": "/audio/tiger-shark-zh.mp3",
+        "fact-bones": "/audio/fact-bones-zh.mp3",
+        "fact-smell": "/audio/fact-smell-zh.mp3",
+        "fact-growing": "/audio/fact-growing-zh.mp3",
+        "fact-speed": "/audio/fact-speed-zh.mp3"
       },
       "ja": {
         "great-white": "/audio/great-white-ja.mp3",
         "whale-shark": "/audio/whale-shark-ja.mp3",
         "hammerhead": "/audio/hammerhead-ja.mp3",
-        "tiger-shark": "/audio/tiger-shark-ja.mp3"
+        "tiger-shark": "/audio/tiger-shark-ja.mp3",
+        "fact-bones": "/audio/fact-bones-ja.mp3",
+        "fact-smell": "/audio/fact-smell-ja.mp3",
+        "fact-growing": "/audio/fact-growing-ja.mp3",
+        "fact-speed": "/audio/fact-speed-ja.mp3"
       }
     };
 
@@ -264,10 +468,254 @@
       }
     }
 
+    /* ===========================
+       QUIZ SYSTEM
+       =========================== */
+
+    let currentQuizQuestion = 0;
+    const quizQuestions = [
+      {
+        en: "Which shark is the biggest?",
+        th: "ฉลามตัวไหนใหญ่ที่สุด?",
+        zh: "哪种鲨鱼最大?",
+        ja: "どのサメが最も大きいですか?",
+        answer: "whale-shark"
+      },
+      {
+        en: "Which shark is known for jumping out of the water?",
+        th: "ฉลามตัวไหนที่มีชื่อเสียงในการโดดออกจากน้ำ?",
+        zh: "哪种鲨鱼以跳出水面而闻名?",
+        ja: "どのサメが水から飛び出すことで知られていますか?",
+        answer: "great-white"
+      },
+      {
+        en: "Which shark has a funny-looking head?",
+        th: "ฉลามตัวไหนมีหัวตลกขบขัน?",
+        zh: "哪种鲨鱼的头看起来很有趣?",
+        ja: "どのサメが面白い形の頭を持っていますか?",
+        answer: "hammerhead"
+      },
+      {
+        en: "Which shark is called the stripy explorer?",
+        th: "ฉลามตัวไหนที่เรียกว่านักสำรวจลายทาง?",
+        zh: "哪种鲨鱼被称为有条纹的探险家?",
+        ja: "どのサメがしま模様の冒険家と呼ばれていますか?",
+        answer: "tiger-shark"
+      },
+      {
+        en: "Which shark only eats tiny plankton?",
+        th: "ฉลามตัวไหนที่กินแพลงก์ตันเล็กน้อยเท่านั้น?",
+        zh: "哪种鲨鱼只吃微小的浮游生物?",
+        ja: "どのサメが小さなプランクトンだけを食べますか?",
+        answer: "whale-shark"
+      },
+      {
+        en: "How many sharp teeth does the Great White have?",
+        th: "ฉลามหัวขาดมีฟันคมกี่ซี่?",
+        zh: "大白鲨有多少颗尖牙?",
+        ja: "ホホジロザメは何本の鋭い歯を持っていますか?",
+        answer: "great-white"
+      },
+      {
+        en: "Which shark loves to eat stingrays?",
+        th: "ฉลามตัวไหนที่ชอบกินแมงดา?",
+        zh: "哪种鲨鱼喜欢吃黄貂鱼?",
+        ja: "どのサメがエイを食べるのが好きですか?",
+        answer: "hammerhead"
+      },
+      {
+        en: "Which shark hunts at night time?",
+        th: "ฉลามตัวไหนล่าสัตว์ในเวลากลางคืน?",
+        zh: "哪种鲨鱼在晚上狩猎?",
+        ja: "どのサメが夜間に狩りをしますか?",
+        answer: "tiger-shark"
+      }
+    ];
+
+    function checkAnswer(selected) {
+      const question = quizQuestions[currentQuizQuestion];
+      const resultEl = document.getElementById('quizResult');
+      
+      if (selected === question.answer) {
+        resultEl.textContent = currentLanguage === 'en' ? '✓ Correct! Great job!' : 
+                               currentLanguage === 'th' ? '✓ ถูก! ทำได้ดี!' :
+                               currentLanguage === 'zh' ? '✓ 正确! 做得很好!' :
+                               '✓ 正解! よくできました!';
+        resultEl.style.color = '#10b981';
+      } else {
+        resultEl.textContent = currentLanguage === 'en' ? '✗ Try again!' : 
+                               currentLanguage === 'th' ? '✗ ลองใหม่!' :
+                               currentLanguage === 'zh' ? '✗ 再试一次!' :
+                               '✗ もう一度試してください!';
+        resultEl.style.color = '#ef4444';
+      }
+
+      // Move to next question after delay
+      setTimeout(() => {
+        currentQuizQuestion = (currentQuizQuestion + 1) % quizQuestions.length;
+        const q = quizQuestions[currentQuizQuestion];
+        document.getElementById('quizQuestion').textContent = q[currentLanguage];
+        resultEl.textContent = '';
+      }, 2000);
+    }
+
+    /* ===========================
+       GAME SYSTEM
+       =========================== */
+
+    let currentGame = 'diet';
+    let dietIndex = 0;
+    let draggedElement = null;
+
+    // Initialize diet game on page load
+    window.addEventListener('load', () => {
+      setLanguage('en');
+      initDiet();
+    });
+
+    /* ===========================
+       SHARK DIET GAME
+       =========================== */
+
+    const dietData = [
+      {
+        en: { shark: '🦈 Great White', food: ['Fish & Seals', 'Plankton', 'Stingrays'] },
+        th: { shark: '🦈 ฉลามหัวขาด', food: ['ปลาและม้าน้ำ', 'แพลงก์ตัน', 'แมงดา'] },
+        zh: { shark: '🦈 大白鲨', food: ['鱼和海豹', '浮游生物', '黄貂鱼'] },
+        ja: { shark: '🦈 ホホジロザメ', food: ['魚とアザラシ', 'プランクトン', 'エイ'] },
+        correct: 0
+      },
+      {
+        en: { shark: '🐋 Whale Shark', food: ['Plankton', 'Fish & Seals', 'Stingrays'] },
+        th: { shark: '🐋 ฉลามวาฬ', food: ['แพลงก์ตัน', 'ปลาและม้าน้ำ', 'แมงดา'] },
+        zh: { shark: '🐋 鲸鲨', food: ['浮游生物', '鱼和海豹', '黄貂鱼'] },
+        ja: { shark: '🐋 ジンベエザメ', food: ['プランクトン', '魚とアザラシ', 'エイ'] },
+        correct: 0
+      },
+      {
+        en: { shark: '🔨 Hammerhead', food: ['Stingrays', 'Fish & Seals', 'Plankton'] },
+        th: { shark: '🔨 ฉลามค้อน', food: ['แมงดา', 'ปลาและม้าน้ำ', 'แพลงก์ตัน'] },
+        zh: { shark: '🔨 锤头鲨', food: ['黄貂鱼', '鱼和海豹', '浮游生物'] },
+        ja: { shark: '🔨 シュモクザメ', food: ['エイ', '魚とアザラシ', 'プランクトン'] },
+        correct: 2
+      },
+      {
+        en: { shark: '🐯 Tiger Shark', food: ['Almost anything!', 'Plankton', 'Stingrays'] },
+        th: { shark: '🐯 ฉลามเสือ', food: ['เกือบทุกอย่าง!', 'แพลงก์ตัน', 'แมงดา'] },
+        zh: { shark: '🐯 虎鲨', food: ['几乎什么都吃!', '浮游生物', '黄貂鱼'] },
+        ja: { shark: '🐯 トラザメ', food: ['ほぼすべて!', 'プランクトン', 'エイ'] },
+        correct: 0
+      }
+    ];
+
+    function initDiet() {
+      dietIndex = Math.floor(Math.random() * dietData.length);
+      const data = dietData[dietIndex][currentLanguage];
+      document.getElementById('dietQuestion').textContent = data.shark;
+      const optionsContainer = document.getElementById('dietOptions');
+      optionsContainer.innerHTML = '';
+
+      data.food.forEach((food, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'diet-option';
+        btn.textContent = food;
+        btn.onclick = () => checkDiet(idx);
+        optionsContainer.appendChild(btn);
+      });
+
+      document.getElementById('dietResult').textContent = '';
+    }
+
+    function checkDiet(selected) {
+      const data = dietData[dietIndex];
+      const resultEl = document.getElementById('dietResult');
+
+      if (selected === data.correct) {
+        resultEl.textContent = currentLanguage === 'en' ? '✓ Correct!' : 
+                               currentLanguage === 'th' ? '✓ ถูก!' :
+                               currentLanguage === 'zh' ? '✓ 正确!' :
+                               '✓ 正解!';
+        resultEl.style.color = '#10b981';
+      } else {
+        resultEl.textContent = currentLanguage === 'en' ? '✗ Try again!' : 
+                               currentLanguage === 'th' ? '✗ ลองใหม่!' :
+                               currentLanguage === 'zh' ? '✗ 再试一次!' :
+                               '✗ もう一度試してください!';
+        resultEl.style.color = '#ef4444';
+      }
+
+      setTimeout(() => {
+        initDiet();
+      }, 1500);
+    }
+
+    /* ===========================
+       SIZE SORTER GAME
+       =========================== */
+
+    function dragStart(event) {
+      draggedElement = event.target;
+      event.target.style.opacity = '0.5';
+    }
+
+    function allowDrop(event) {
+      event.preventDefault();
+    }
+
+    function drop(event) {
+      event.preventDefault();
+      if (!draggedElement) return;
+
+      const target = event.target.closest('.sort-slot') || event.target;
+      if (target.classList.contains('sort-slot')) {
+        target.innerHTML = draggedElement.innerHTML;
+        target.dataset.size = draggedElement.dataset.size;
+        target.classList.add('has-item');
+      }
+      draggedElement.style.opacity = '1';
+      draggedElement = null;
+    }
+
+    function checkSize() {
+      const slots = document.querySelectorAll('.sort-slot');
+      let correct = true;
+      let allFilled = true;
+
+      slots.forEach((slot, idx) => {
+        if (!slot.dataset.size) {
+          allFilled = false;
+        } else if (parseInt(slot.dataset.size) !== idx + 1) {
+          correct = false;
+        }
+      });
+
+      const resultEl = document.getElementById('sizeResult');
+      if (!allFilled) {
+        resultEl.textContent = currentLanguage === 'en' ? 'Fill all positions first!' : 
+                               currentLanguage === 'th' ? 'กรอกตำแหน่งทั้งหมดก่อน!' :
+                               currentLanguage === 'zh' ? '先填充所有位置!' :
+                               '最初にすべての位置を埋めてください!';
+        resultEl.style.color = '#6b7280';
+      } else if (correct) {
+        resultEl.textContent = currentLanguage === 'en' ? '✓ Perfect order! Smallest to biggest!' : 
+                               currentLanguage === 'th' ? '✓ ลำดับสมบูรณ์! จากเล็กที่สุดไปใหญ่ที่สุด!' :
+                               currentLanguage === 'zh' ? '✓ 完美顺序! 从最小到最大!' :
+                               '✓ 完璧な順序! 最小から最大へ!';
+        resultEl.style.color = '#10b981';
+      } else {
+        resultEl.textContent = currentLanguage === 'en' ? '✗ Not quite right. Try again!' : 
+                               currentLanguage === 'th' ? '✗ ไม่ค่อยถูก ลองใหม่!' :
+                               currentLanguage === 'zh' ? '✗ 不完全正确。再试一次!' :
+                               '✗ 完全ではありません。もう一度試してください!';
+        resultEl.style.color = '#ef4444';
+      }
+    }
+
     // Initialize
     window.addEventListener('load', () => {
       setLanguage('en');
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9daf2b11b0d25fdf',t:'MTc3MzI4MDQzOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  </div>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9daf4ac1b12d9bda',t:'MTc3MzI4MTczNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
