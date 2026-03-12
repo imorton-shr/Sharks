@@ -264,7 +264,7 @@
       // Play audio when revealing the answer
       if (!answer.classList.contains('hidden') && emoji) {
         const factId = factIdMap[emoji];
-        playFactAudio(factId);
+        playAudio(factId);
       }
       
       // Replace emoji with checkmark or back to original emoji
@@ -301,78 +301,25 @@
        AUDIO SYSTEM
        =========================== */
     
-    let currentLanguage = "en";
-    let currentAudio = null;
-    let currentShark = null;
+   let currentLanguage = "en";
+let currentAudio = null;
 
-    const audioUrls = {
-      "en": {
-        "great-white": "great-white-en.mp3",
-        "whale-shark": "whale-shark-en.mp3",
-        "hammerhead": "hammerhead-en.mp3",
-        "tiger-shark": "tiger-shark-en.mp3",
-        "fact-bones": "fact-bones-en.mp3",
-        "fact-smell": "fact-smell-en.mp3",
-        "fact-growing": "fact-growing-en.mp3",
-        "fact-speed": "fact-speed-en.mp3"
-      },
-      "th": {
-        "great-white": "great-white-th.mp3",
-        "whale-shark": "whale-shark-th.mp3",
-        "hammerhead": "hammerhead-th.mp3",
-        "tiger-shark": "tiger-shark-th.mp3",
-        "fact-bones": "fact-bones-th.mp3",
-        "fact-smell": "fact-smell-th.mp3",
-        "fact-growing": "fact-growing-th.mp3",
-        "fact-speed": "fact-speed-th.mp3"
-      },
-      "zh": {
-        "great-white": "great-white-zh.mp3",
-        "whale-shark": "whale-shark-zh.mp3",
-        "hammerhead": "hammerhead-zh.mp3",
-        "tiger-shark": "tiger-shark-zh.mp3",
-        "fact-bones": "fact-bones-zh.mp3",
-        "fact-smell": "fact-smell-zh.mp3",
-        "fact-growing": "fact-growing-zh.mp3",
-        "fact-speed": "fact-speed-zh.mp3"
-      },
-      "ja": {
-        "great-white": "great-white-ja.mp3",
-        "whale-shark": "whale-shark-ja.mp3",
-        "hammerhead": "hammerhead-ja.mp3",
-        "tiger-shark": "tiger-shark-ja.mp3",
-        "fact-bones": "fact-bones-ja.mp3",
-        "fact-smell": "fact-smell-ja.mp3",
-        "fact-growing": "fact-growing-ja.mp3",
-        "fact-speed": "fact-speed-ja.mp3"
-      }
-    };
+function playAudio(id) {
 
-    function playSharkAudio(sharkId) {
-      const langAudio = audioUrls[currentLanguage];
-      const audioPath = langAudio && langAudio[sharkId];
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
 
-      if (!audioPath) {
-        console.error("Audio not found for:", sharkId, "language:", currentLanguage);
-        return;
-      }
+  const file = `audio/${id}-${currentLanguage}.mp3`;
 
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-      }
+  currentAudio = new Audio(file);
 
-      currentAudio = new Audio(audioPath);
-      currentAudio.play().catch(err => console.error("Play failed:", err));
-    }
+  currentAudio.play().catch(() => {
+    console.log("Audio missing:", file);
+  });
 
-    function stopCurrentAudio() {
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-        currentAudio = null;
-      }
-    }
+}
 
     /* ===========================
        SHARK DATA
@@ -426,7 +373,7 @@
       document.getElementById('modalBackdrop').classList.add('active');
       
       // Play audio automatically when modal opens
-      playSharkAudio(sharkId);
+      playAudio(sharkId);
     }
 
     function closeSharkInfo() {
